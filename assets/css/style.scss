@@ -429,3 +429,69 @@
   max-width: 500px;
   width: 100%;
 }
+
+/* --- コードブロック全体のスタイル --- */
+.code-container {
+    background-color: #272727; /* ダークグレーの背景 */
+    color: #f8f8f2;             /* 明るいフォントカラー */
+    border-radius: 8px;
+    margin: 20px 0;
+    font-family: 'Consolas', 'Monaco', monospace; /* プログラミングフォント */
+    font-size: 14px;
+    overflow: hidden; /* 子要素の角丸を保持 */
+}
+
+/* --- ヘッダー部分のスタイル --- */
+.code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 15px;
+    background-color: #383838; /* ヘッダーの背景色 */
+    border-bottom: 1px solid #555;
+}
+
+/* --- 言語ラベルのスタイル --- */
+.language-label {
+    font-weight: bold;
+    color: #66d9ef; /* 言語名の強調色 */
+    font-size: 12px;
+}
+
+/* --- コピーボタンのスタイル --- */
+.copy-button {
+    background-color: #4CAF50; /* ボタンの背景色（緑） */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 12px;
+}
+
+.copy-button:hover {
+    background-color: #45a049;
+}
+
+/* --- コード本体のスタイル --- */
+.code-container pre {
+    margin: 0;
+    padding: 15px;
+    overflow-x: auto; /* コードが長い場合に横スクロールを可能にする */
+    white-space: pre-wrap; /* 行の折り返し */
+    word-wrap: break-word; /* 単語の途中で改行 */
+}
+
+/* preタグ内のcodeタグに直接スタイルはほとんど必要ありません */
+.code-content {
+    display: block; /* codeタグが行全体を占めるように */
+    color: #fff;
+    font-size: 13px;
+}
+
+/* --- コピー成功時のフィードバック --- */
+.copy-button.copied {
+    background-color: #f92672; /* コピー完了後の色（赤系） */
+    pointer-events: none; /* 再度クリックできないようにする */
+}

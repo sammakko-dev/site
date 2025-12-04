@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sammakkoのブログです。レンダリングすると一部が真っ黒になる現象を解決します。" />
+  <meta name="keywords" content="Unity, Blender, ゲーム, 脱出ゲーム, sammakko, ブラウザゲーム, FROGROOM" />
+  <meta property="og:title" content="【Blender】レンダリングすると一部が真っ黒になる現象を解決する【初心者向け】 | Sammakko – Web Games & Blog" />
+  <meta property="og:description" content="Sammakkoのブログです。レンダリングすると一部が真っ黒になる現象を解決します。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://sammakkodeveloper-lgtm.github.io/site/?a" />
+  <meta property="og:image" content="https://sammakkodeveloper-lgtm.github.io/site/ogp.png" />
+  <meta property="og:site_name" content="Sammakko – Web Games & Blog" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="レンダリングすると一部が真っ黒になる現象を解決する【初心者向け】 | Sammakko – Web Games & Blog" />
+  <meta name="twitter:description" content="Sammakkoのブログです。レンダリングすると一部が真っ黒になる現象を解決します。" />
+  <meta name="twitter:image" content="https://sammakkodeveloper-lgtm.github.io/site/ogp.png" />
+  <link rel="icon" href="https://sammakkodeveloper-lgtm.github.io/site/assets/image/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="https://sammakkodeveloper-lgtm.github.io/site/assets/image/favicon.ico" type="image/x-icon">
+  <title>【Blender】レンダリングすると一部が真っ黒になる現象を解決する【初心者向け】 | Sammakko – Web Games & Blog</title>
+	<link href="/assets/css/style.css" rel="stylesheet" type="text/css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@100..900&family=M+PLUS+Rounded+1c&family=Momo+Trust+Display&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6035150956930871"
+     crossorigin="anonymous"></script>
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-683ZNENY1B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-683ZNENY1B');
+</script>
+<body class="blog">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.4/css/all.css">
+<div id="page_top"><a href="#"></a></div>
+  <div id="header"></div>
+  <main>
+    <div class="content">
+      <time datetime="2025-12-04">2025.12.04</time>
+      <h2 class="blog-title">【Blender】複数のカメラを連続してレンダリングする</h2>
+      <p class="blog-text">
+みなさんこんにちは。<br>
+脱出ゲーム制作中のSammakkoです。<br>
+<br>
+現在作成している脱出ゲームは素材をBlenderで作成しています。<br>
+Blenderは絵心がなくても綺麗な素材が作れる素晴らしいツールですね！<br>
+ただ、厄介なのは絵が綺麗な分レンダリングに時間がかかる！<br>
+<br>
+今回は複数のカメラがある場合に一気にレンダリングする方法を紹介します。<br>
+<br>
+こちらが現在制作中の脱出ゲームの部屋です。</p>
+<p class="blog-img"><img src="/assets/image/blog/blender-post02-img01.png" alt="blenderで作った部屋"></p>
+<p class="blog-text">俯瞰でみるとこのようになっています。</p>
+<p class="blog-img"><img src="/assets/image/blog/blender-post02-img02.png" alt="blenderで作った部屋の俯瞰"></p>
+<p class="blog-text">
+オレンジの枠はすべてカメラです。いろんな画角から撮影しているのですごいカメラの量になっています。<br>
+複数のカメラを一気にレンダリングできるなら、その間放っておけますね！<br>
+<br>
+Blenderが落ちる可能性もあるので、以下の内容を実行する前にデータの保存を忘れずにしてください！<br>
+実行中はBlenderの操作ができなくなります。うまくいかない場合でも自己責任でお願いします。<br>
+<br>
+連続してレンダリングする方法についてですが、以下のコードを使います。<br>
+保存先パスはレンダリングした画像を保存したい場所のパスに書き換えてください。<br>
+レンダリングするカメラのカメラ名01,カメラ名02となっている個所はレンダリングしたいカメラの名前に変更してください。<br>
+保存ファイル名なども適宜変更してください。
+</p>
+<div class="code-container">
+    <div class="code-header">
+        <span class="language-label">Python</span>
+        <button class="copy-button" onclick="copyCode(this)">コピー</button>
+    </div>
+    <pre><code class="code-content">
+import bpy
+import time
+
+# 保存先パス
+output_base = r"C:\Users\YourName\Documents\BlenderProject\\"
+
+# レンダリングするカメラ（Outlinerで確認した正確な名前）
+cameras = [
+    "カメラ名01",
+    "カメラ名02",
+    "カメラ名03",
+    "カメラ名04"
+]
+
+# Render Result ウィンドウを閉じる
+for area in bpy.context.screen.areas:
+    if area.type == 'IMAGE_EDITOR':
+        area.ui_type = 'UV'
+
+for i, cam_name in enumerate(cameras):
+    if cam_name not in bpy.data.objects:
+        print(f"カメラが見つかりません: {cam_name}")
+        continue  # 無いカメラはスキップ
+
+    print(f"▶ カメラ切り替え: {cam_name}")
+    bpy.context.scene.camera = bpy.data.objects[cam_name]
+
+    # 保存ファイル名
+    bpy.context.scene.render.filepath = output_base + f"camera_{i+1}.png"
+
+    print(f"レンダリング開始: {cam_name}")
+    try:
+        bpy.ops.render.render(write_still=True)
+    except Exception as e:
+        print(f"レンダリングでエラー発生: {e}")
+        continue
+
+    # 少し待つ（安全マージン）
+    time.sleep(0.5)
+
+print("全カメラのレンダリングが完了しました！")
+
+    </code></pre>
+</div>
+<p class="blog-text">
+  <br>
+  まず、画面上部の[ウィンドウ]から[システムコンソールの切り替え]をクリックし、システムコンソールを開きます。この画面にエラーや経過が表示されます。<br><br>
+  次にウィンドウ左上部の[エディタータイプ切替]ボタンから[テキストエディター]を選択します。<br>
+</p>
+<p class="blog-img"><img src="/assets/image/blog/blender-post02-img03.png" alt="エディタータイプ切替"></p>
+<p class="blog-text">
+  エディター上部の中央の[新規]をクリックし、黒い画面にコードを張り付けます。
+</p>
+<p class="blog-img"><img src="/assets/image/blog/blender-post02-img04.png" alt=""></p>
+<p class="blog-text">
+  こちらのスクリプト実行ボタンを押すと、コードが動き始めます。データを保存しておくのを忘れずに！
+</p>
+<p class="blog-img"><img src="/assets/image/blog/blender-post02-img05.png" alt=""></p>
+<p class="blog-text">
+  <br>
+  しばらくすると1枚ずつ画像が保存されていくと思います！<br>
+<br>
+ この記事で使用したコードはAIに書いてもらいました。<br>
+もっと簡単な方法がありましたら教えていただけると嬉しいです！<br>
+
+</p>
+      <p class="center margin80-40"><a class="button-black" href="/blog/">記事一覧へ戻る</a></p>
+    </div>
+    <div id="sidebar"></div>
+  </main>
+    <div id="footer"></div>
+    <script type="text/javascript" src="/assets/js/script.js"></script>
+</body>
+</html>
