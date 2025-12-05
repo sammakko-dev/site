@@ -33,6 +33,10 @@
   a {
     text-decoration: none;
     color: inherit;
+    transition: .3s;
+    &:hover{
+      opacity: .6;
+    }
   }
 
   img {
@@ -157,10 +161,39 @@
       text-decoration: none;
         color: #000;
       color: #000;
+      position: relative;
       &+ .header_nav_item{
         margin-left: 30px;
       }
     }
+    .blog{
+      .nav_item_blog{
+        &::after{
+          width: 100%;
+          content: "";
+          height: 3px;
+          background: #000;
+          position: absolute;
+          bottom: -6px;
+          right: 0;
+          left: 0;
+        }
+      }
+    }
+    .games{
+      .nav_item_games{
+        &::after{
+          width: 100%;
+          content: "";
+          height: 3px;
+          background: #000;
+          position: absolute;
+          bottom: -6px;
+          right: 0;
+          left: 0;
+        }
+      }
+    }    
       main {
       max-width: 1140px;
       margin: 20px auto;
