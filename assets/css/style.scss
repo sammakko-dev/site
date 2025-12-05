@@ -80,6 +80,12 @@
       color: inherit;
       text-decoration: none;
     }
+    .sp{
+      display: none;
+      @media (max-width: 500px) {
+        display: block;
+      }
+    }
     #page_top{
       width: 50px;
       height: 50px;
@@ -304,13 +310,6 @@
       max-width: 700px;
       line-height: 1.8;
     }
-    .frogtreasure{
-      #unity-canvas{
-        width: 776px; 
-        height: 388px;  
-      }
-    }
-
     .game-thum-link {
     display: flex;
     text-decoration: none;
@@ -494,4 +493,24 @@
 .copy-button.copied {
     background-color: #f92672; /* コピー完了後の色（赤系） */
     pointer-events: none; /* 再度クリックできないようにする */
+}
+
+.unity-mobile{
+  height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+}
+.tab_text{
+  margin-bottom: 20px;
+  display: block;
+}
+.tab{
+  width: 15px;
+    display: inline-block;
+    margin-left: 3px;
+}
+.game_page{
+  background-color: #000; 
 }

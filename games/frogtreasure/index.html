@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="ja">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
   <body>
-    <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=776 height=384 tabindex="-1"></canvas>
+    <div id="unity-container" class="unity-desktop" data-aspect-w=800 data-aspect-h=400>
+      <canvas id="unity-canvas" width=800 height=400 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
@@ -98,8 +98,8 @@
 
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
-        canvas.style.width = "766px";
-        canvas.style.height = "384px";
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
       }
 
       document.querySelector("#unity-loading-bar").style.display = "block";
@@ -123,5 +123,6 @@
       document.body.appendChild(script);
 
     </script>
+        <script type="text/javascript" src="/assets/js/script.js"></script>
   </body>
 </html>

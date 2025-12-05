@@ -92,3 +92,66 @@ function copyCode(buttonElement) {
             alert('コードのコピーに失敗しました。お手数ですが手動でコピーしてください。');
         });
 }
+
+
+
+//unity比率調整表示用
+         function resizeCanvas() {
+            console.log("test");
+            const container = document.getElementById('unity-container');
+
+            // 1. HTMLのカスタム属性から比率を読み込む
+            const preferred_width = parseInt(container.dataset.aspectW, 10);
+            const preferred_height = parseInt(container.dataset.aspectH, 10);
+            console.log(preferred_width);
+            console.log(preferred_height);
+            if (isNaN(preferred_width) || isNaN(preferred_height) || preferred_width <= 0 || preferred_height <= 0) {
+                 console.error('アスペクト比のデータが不正です。');
+                 return;
+            }
+
+            // 比率を計算 (幅/高さ)
+            const preferred_aspect_ratio = preferred_width / preferred_height;
+
+            // 2. ウィンドウサイズを取得
+            const PADDING_TOP = 20; // 情報バーの下 + 少しの余白
+            const PADDING_BOTTOM = 20; // 下部の余白
+            const PADDING_HORIZONTAL = 40; // 左右の合計余白
+
+            const window_width = window.innerWidth;
+            const window_height = window.innerHeight;
+
+            let width = preferred_width;
+            let height = preferred_height;
+            
+            // 3. Contain ロジックの実行
+            
+            // 現在のウィンドウの使用可能領域の縦横比 (幅/高さ)
+            const window_aspect_ratio = window_width / window_height;
+
+            if (window_aspect_ratio >= preferred_aspect_ratio) {
+                // ウィンドウがゲームより横長か同じ比率の場合: 高さをウィンドウに合わせる
+                
+                // 高さを使って新しい幅を計算: new_width = preferred_aspect_ratio * new_height
+                width = preferred_aspect_ratio * window_height; 
+                height = window_height;
+            } else {
+                // ウィンドウがゲームより縦長の場合: 幅をウィンドウに合わせる
+                
+                // 幅を使って新しい高さを計算: new_height = new_width / preferred_aspect_ratio
+                width = window_width;
+                height = window_width / preferred_aspect_ratio;
+            }
+            
+            // 4. サイズの適用
+            container.style.width = `${Math.round(width)}px`;
+            container.style.height = `${Math.round(height)}px`;
+
+        }
+
+        // 初期ロード時とウィンドウリサイズ時に実行
+        window.addEventListener('load', resizeCanvas);
+        window.addEventListener('resize', resizeCanvas);
+        
+        // 念のため初期実行
+        resizeCanvas();
