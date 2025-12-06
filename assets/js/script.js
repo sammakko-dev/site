@@ -95,9 +95,8 @@ function copyCode(buttonElement) {
 
 
 
-//unity比率調整表示用
+        //unity比率調整表示用
          function resizeCanvas() {
-            console.log("test");
             const container = document.getElementById('unity-container');
 
             // 1. HTMLのカスタム属性から比率を読み込む
@@ -112,12 +111,7 @@ function copyCode(buttonElement) {
 
             // 比率を計算 (幅/高さ)
             const preferred_aspect_ratio = preferred_width / preferred_height;
-
-            // 2. ウィンドウサイズを取得
-            const PADDING_TOP = 20; // 情報バーの下 + 少しの余白
-            const PADDING_BOTTOM = 20; // 下部の余白
-            const PADDING_HORIZONTAL = 40; // 左右の合計余白
-
+            // 2. ウィンドウサイズを取得            
             const window_width = window.innerWidth;
             const window_height = window.innerHeight;
 
@@ -128,16 +122,13 @@ function copyCode(buttonElement) {
             
             // 現在のウィンドウの使用可能領域の縦横比 (幅/高さ)
             const window_aspect_ratio = window_width / window_height;
-
             if (window_aspect_ratio >= preferred_aspect_ratio) {
                 // ウィンドウがゲームより横長か同じ比率の場合: 高さをウィンドウに合わせる
-                
                 // 高さを使って新しい幅を計算: new_width = preferred_aspect_ratio * new_height
                 width = preferred_aspect_ratio * window_height; 
                 height = window_height;
             } else {
                 // ウィンドウがゲームより縦長の場合: 幅をウィンドウに合わせる
-                
                 // 幅を使って新しい高さを計算: new_height = new_width / preferred_aspect_ratio
                 width = window_width;
                 height = window_width / preferred_aspect_ratio;

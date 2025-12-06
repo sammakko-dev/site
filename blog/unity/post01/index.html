@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sammakkoのブログです。【Unity】ゲーム画面をブラウザいっぱいに表示し、リサイズに追従させる" />
+  <meta name="keywords" content="Unity, Blender, ゲーム, 脱出ゲーム, sammakko, ブラウザゲーム, FROGROOM" />
+  <meta property="og:title" content="【Unity】ゲーム画面をブラウザいっぱいに表示し、リサイズに追従させる  | Sammakko – Web Games & Blog" />
+  <meta property="og:description" content="Sammakkoのブログです【Unity】ゲーム画面をブラウザいっぱいに表示し、リサイズに追従させる。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://sammakkodeveloper-lgtm.github.io/site/?a" />
+  <meta property="og:image" content="https://sammakkodeveloper-lgtm.github.io/site/ogp.png" />
+  <meta property="og:site_name" content="Sammakko – Web Games & Blog" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="【Unity】ゲーム画面をブラウザいっぱいに表示し、リサイズに追従させる  | Sammakko – Web Games & Blog" />
+  <meta name="twitter:description" content="Sammakkoのブログです。【Unity】ゲーム画面をブラウザいっぱいに表示し、リサイズに追従させる" />
+  <meta name="twitter:image" content="https://sammakkodeveloper-lgtm.github.io/site/ogp.png" />
+  <link rel="icon" href="https://sammakkodeveloper-lgtm.github.io/site/assets/image/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="https://sammakkodeveloper-lgtm.github.io/site/assets/image/favicon.ico" type="image/x-icon">
+  <title>【Unity】ゲーム画面をブラウザいっぱいに表示し、リサイズに追従させる | Sammakko – Web Games & Blog</title>
+	<link href="/assets/css/style.css" rel="stylesheet" type="text/css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@100..900&family=M+PLUS+Rounded+1c&family=Momo+Trust+Display&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6035150956930871"
+     crossorigin="anonymous"></script>
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-683ZNENY1B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-683ZNENY1B');
+</script>
+<body class="blog">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.4/css/all.css">
+<div id="page_top"><a href="#"></a></div>
+  <div id="header"></div>
+  <main>
+    <div class="content">
+      <time>2025.12.06</time>
+      <h2 class="blog-title">【Unity】ゲーム画面をブラウザいっぱいに表示し、リサイズに追従させる</h2>
+      <p class="blog-text">
+このサイトで公開しているゲームを、別タブで開けるようにしたかったのですが、Unityをブラウザの画面いっぱいに表示するのが少し大変だったので忘備録として残しておきます。<br>
+<br>
+まず、WebGLでビルドされたデータの中にあるindex.htmlを編集していきます。<br><br>
+スクロールバーを表示させたくないので#unity-container に overflow: hidden; を設定します。<br>
+また、#unity-containerにはdata-aspect-w=800,data-aspect-h=400という二つの属性も追加します。<br>
+これはJavaScript側で縦横比の計算に利用するために使うので、自分のゲームのサイズを入力してください。以下のようになっていればＯＫです。
+</p>
+<div class="code-container">
+    <div class="code-header">
+        <span class="language-label">html</span>
+        <button class="copy-button" onclick="copyCode(this)">コピー</button>
+    </div>
+    <pre><code class="code-content">&lt;div id=&quot;unity-container&quot; style=&quot;overflow: hidden;&quot; class=&quot;unity-desktop&quot; data-aspect-w=&quot;800&quot; data-aspect-h=&quot;400&quot;&gt;</code></pre>
+</div>
+<p class="blog-text">
+  <br>
+#unity-footerは非表示にしたかったのでdisplay: none;を設定しました。<br>
+<br>
+あとは<br>
+<span class="f-small">// Desktop style: Render the game canvas in a window that can be maximized to fullscreen:<br></span>
+というコメントがある場所を探してください。<br>
+その下にある<br>
+<span class="f-small">canvas.style.width = "100%";<br>
+canvas.style.height = "100%"; <br></span>
+こちらのコードが100％でなければ100％に変更してください。<br>
+<br>
+あとは以下のJSを読み込ませてください。<br>
+      </p>
+      <div class="code-container">
+    <div class="code-header">
+        <span class="language-label">javascript</span>
+        <button class="copy-button" onclick="copyCode(this)">コピー</button>
+    </div>
+    <pre><code class="code-content">
+         function resizeCanvas() {
+            const container = document.getElementById('unity-container');
+
+            // 1. HTMLのカスタム属性から比率を読み込む
+            const preferred_width = parseInt(container.dataset.aspectW, 10);
+            const preferred_height = parseInt(container.dataset.aspectH, 10);
+            console.log(preferred_width);
+            console.log(preferred_height);
+            if (isNaN(preferred_width) || isNaN(preferred_height) || preferred_width <= 0 || preferred_height <= 0) {
+                 console.error('アスペクト比のデータが不正です。');
+                 return;
+            }
+
+            // 比率を計算 (幅/高さ)
+            const preferred_aspect_ratio = preferred_width / preferred_height;
+            // 2. ウィンドウサイズを取得            
+            const window_width = window.innerWidth;
+            const window_height = window.innerHeight;
+
+            let width = preferred_width;
+            let height = preferred_height;
+            
+            // 3. Contain ロジックの実行
+            
+            // 現在のウィンドウの使用可能領域の縦横比 (幅/高さ)
+            const window_aspect_ratio = window_width / window_height;
+            if (window_aspect_ratio >= preferred_aspect_ratio) {
+                // ウィンドウがゲームより横長か同じ比率の場合: 高さをウィンドウに合わせる
+                // 高さを使って新しい幅を計算: new_width = preferred_aspect_ratio * new_height
+                width = preferred_aspect_ratio * window_height; 
+                height = window_height;
+            } else {
+                // ウィンドウがゲームより縦長の場合: 幅をウィンドウに合わせる
+                // 幅を使って新しい高さを計算: new_height = new_width / preferred_aspect_ratio
+                width = window_width;
+                height = window_width / preferred_aspect_ratio;
+            }
+            
+            // 4. サイズの適用
+            container.style.width = `${Math.round(width)}px`;
+            container.style.height = `${Math.round(height)}px`;
+
+        }
+
+        // 初期ロード時とウィンドウリサイズ時に実行
+        window.addEventListener('load', resizeCanvas);
+        window.addEventListener('resize', resizeCanvas);
+        
+        // 念のため初期実行
+        resizeCanvas();
+    </code></pre>
+</div>
+<p class="blog-text">
+  以上でゲームが画面幅いっぱいに表示されて、ブラウザの幅を変えても追従するようになります。<br>
+  <a class="underline" href="/games/frogtreasure/" target="_blank">サンプルはこちら</a>
+</p>
+      <p class="center margin80-40"><a class="button-black" href="/blog/">記事一覧へ戻る</a></p>
+    </div>
+    <div id="sidebar"></div>
+  </main>
+    <div id="footer"></div>
+    <script type="text/javascript" src="/assets/js/script.js"></script>
+</body>
+</html>
