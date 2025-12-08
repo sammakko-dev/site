@@ -155,6 +155,11 @@
       max-width: 200px;
       width: 100%;
     }
+    .header_nav{
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
     .header_nav_item{
       font-family: "Momo Trust Display", sans-serif;
       color: inherit;
@@ -194,6 +199,14 @@
         }
       }
     }    
+    .nav_item_x{ 
+      width: 32px;
+      display: block;
+      border-radius: 50%;
+    img{
+      border-radius: 50%;
+    }
+    }
       main {
       max-width: 1140px;
       margin: 20px auto;

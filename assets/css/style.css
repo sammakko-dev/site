@@ -164,6 +164,12 @@ header .inner {
   width: 100%;
 }
 
+.header_nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .header_nav_item {
   font-family: "Momo Trust Display", sans-serif;
   color: inherit;
@@ -196,6 +202,15 @@ header .inner {
   bottom: -6px;
   right: 0;
   left: 0;
+}
+
+.nav_item_x {
+  width: 32px;
+  display: block;
+  border-radius: 50%;
+}
+.nav_item_x img {
+  border-radius: 50%;
 }
 
 main {
