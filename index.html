@@ -84,11 +84,11 @@ async function loadPart(id, file, callback) {
     console.error(err);
   }
 }
-loadPart("header", "/template/header.html");
-loadPart("sidebar", "/template/sidebar.html", () => {
+loadPart("header", "./template/header.html");
+loadPart("sidebar", "./template/sidebar.html", () => {
   (adsbygoogle = window.adsbygoogle || []).push({});
 });
-loadPart("footer", "/template/footer.html");
+loadPart("footer", "./template/footer.html");
 </script>
 </body>
 </html>
